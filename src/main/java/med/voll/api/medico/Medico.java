@@ -1,0 +1,44 @@
+package med.voll.api.medico;
+
+import jakarta.persistence.*;
+import lombok.*;
+import med.voll.api.endereco.Endereco;
+
+@Getter
+@Setter
+@EqualsAndHashCode(of = "id")
+@Entity(name = "Medico")
+@Table(name = "medicos")
+public class Medico {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nome;
+    private String email;
+    private String crm;
+
+    @Enumerated(EnumType.STRING)
+    private Especialidade especialidade;
+
+    @Embedded
+    private Endereco endereco;
+
+    public Medico(String nome, String email, String crm, Especialidade especialidade, Endereco endereco) {
+        this.nome = nome;
+        this.email = email;
+        this.crm = crm;
+        this.especialidade = especialidade;
+        this.endereco = endereco;
+    }
+
+    public Medico(DadosCadastroMedico dados){
+        this.nome = dados.nome();
+        this.email = dados.email();
+        this.crm = dados.crm();
+        this.especialidade = dados.especialidade();
+        this.endereco = new Endereco(dados.endereco());
+    }
+
+    public Medico() {}
+}

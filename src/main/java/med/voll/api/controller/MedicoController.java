@@ -26,7 +26,7 @@ public class MedicoController {
 
     @GetMapping
     public Page<DadosListagemMedico> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
-        return medicoRepository.findAll(pageable)
+        return medicoRepository.findAllByAtivoTrue(pageable)
                 .map(DadosListagemMedico::new);
     }
 
@@ -35,5 +35,12 @@ public class MedicoController {
     public void atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados) {
         Medico medico = medicoRepository.getReferenceById(dados.id());
         medico.atualizarInformacoes(dados);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void desativar(@PathVariable Long id) {
+        Medico medico = medicoRepository.getReferenceById(id);
+        medico.setAtivo(false);
     }
 }

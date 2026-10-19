@@ -1,5 +1,7 @@
 package med.voll.api.endereco;
 
+import jakarta.validation.constraints.NotBlank;
+
 public record DadosEndereco(
         String logradouro,
         String bairro,

@@ -1,6 +1,4 @@
-package med.voll.api.medico;
-
-import org.hibernate.boot.models.annotations.spi.DatabaseObjectDetails;
+package med.voll.api.domain.medico;
 
 public record DadosListagemMedico(
         Long id,

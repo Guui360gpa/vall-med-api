@@ -2,9 +2,6 @@ package med.voll.api.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import med.voll.api.domain.medico.DadosAtualizacaoMedico;
-import med.voll.api.domain.medico.DadosDetalhamentoMedico;
-import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.paciente.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

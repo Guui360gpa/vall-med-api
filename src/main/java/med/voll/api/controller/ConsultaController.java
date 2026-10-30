@@ -1,6 +1,8 @@
 package med.voll.api.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import med.voll.api.domain.consulta.AgendaDeConsultas;
 import med.voll.api.domain.consulta.DadosAgendamentoConsulta;
 import med.voll.api.domain.consulta.DadosDetalhamentoConsulta;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("consultas")
+@RequiredArgsConstructor
 public class ConsultaController {
+
+    private final AgendaDeConsultas agendaDeConsultas;
 
     @PostMapping
     @Transactional
     public ResponseEntity agendar(@RequestBody @Valid DadosAgendamentoConsulta dados) {
-        System.out.println(dados);
+        agendaDeConsultas.agendar(dados);
         return ResponseEntity.ok(new DadosDetalhamentoConsulta(null,null,null,null));
     }
 }

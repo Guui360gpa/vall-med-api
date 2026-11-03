@@ -1,0 +1,2 @@
+ALTER TABLE consultas
+    ADD COLUMN ativa TINYINT(1) NOT NULL DEFAULT 1;

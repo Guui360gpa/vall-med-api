@@ -27,6 +27,8 @@ public class Consulta {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paciente_id")
     private Paciente paciente;
+    private boolean ativa;
+    private String motivo;
 
     private LocalDateTime data;
 
@@ -37,4 +39,5 @@ public class Consulta {
     }
 
     public Consulta() {}
+
 }

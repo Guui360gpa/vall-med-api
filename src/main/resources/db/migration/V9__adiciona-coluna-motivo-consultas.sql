@@ -1,0 +1,2 @@
+ALTER TABLE consultas
+    ADD COLUMN motivo VARCHAR(200) DEFAULT NULL;

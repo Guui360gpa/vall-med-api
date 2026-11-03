@@ -1,7 +1,7 @@
 package med.voll.api.domain.consulta;
 
 import lombok.RequiredArgsConstructor;
-import med.voll.api.domain.consulta.validacoes.IValidacaoConsulta;
+import med.voll.api.domain.consulta.validacoes.IValidacaoAgendamentoConsulta;
 import med.voll.api.domain.consulta.validacoes.ValidacaoConsultaException;
 import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.medico.MedicoRepository;
@@ -18,7 +18,7 @@ public class AgendaDeConsultas {
     private final ConsultaRepository consultaRepository;
     private final MedicoRepository medicoRepository;
     private final PacienteRepository pacienteRepository;
-    private final List<IValidacaoConsulta> validadores;
+    private final List<IValidacaoAgendamentoConsulta> validadores;
 
     public DadosDetalhamentoConsulta agendar(DadosAgendamentoConsulta dados) {
 

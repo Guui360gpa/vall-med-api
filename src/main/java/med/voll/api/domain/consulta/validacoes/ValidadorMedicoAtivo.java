@@ -3,9 +3,11 @@ package med.voll.api.domain.consulta.validacoes;
 import lombok.RequiredArgsConstructor;
 import med.voll.api.domain.consulta.DadosAgendamentoConsulta;
 import med.voll.api.domain.medico.MedicoRepository;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
-public class ValidadorMedicoAtivo {
+public class ValidadorMedicoAtivo implements IValidacaoConsulta{
 
     private final MedicoRepository medicoRepository;
 

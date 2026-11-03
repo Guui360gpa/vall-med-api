@@ -1,11 +1,13 @@
 package med.voll.api.domain.consulta;
 
 import lombok.RequiredArgsConstructor;
+import med.voll.api.domain.consulta.validacoes.IValidacaoConsulta;
 import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.medico.MedicoRepository;
 import med.voll.api.domain.paciente.PacienteRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -15,6 +17,7 @@ public class AgendaDeConsultas {
     private final ConsultaRepository consultaRepository;
     private final MedicoRepository medicoRepository;
     private final PacienteRepository pacienteRepository;
+    private final List<IValidacaoConsulta> validadores;
 
     public void agendar(DadosAgendamentoConsulta dados) {
 
@@ -25,8 +28,9 @@ public class AgendaDeConsultas {
                         .orElseThrow(() -> new NoSuchElementException("Médico não encontrado"))
                 : escolherMedico(dados);
 
-        var consulta = new Consulta(medico,paciente,dados.data());
+        validadores.forEach(v -> v.validar(dados));
 
+        var consulta = new Consulta(medico,paciente,dados.data());
 
         consultaRepository.save(consulta);
     }

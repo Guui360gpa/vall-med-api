@@ -2,6 +2,7 @@ package med.voll.api.domain.consulta;
 
 import lombok.RequiredArgsConstructor;
 import med.voll.api.domain.consulta.validacoes.IValidacaoConsulta;
+import med.voll.api.domain.consulta.validacoes.ValidacaoConsultaException;
 import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.medico.MedicoRepository;
 import med.voll.api.domain.paciente.PacienteRepository;
@@ -19,20 +20,26 @@ public class AgendaDeConsultas {
     private final PacienteRepository pacienteRepository;
     private final List<IValidacaoConsulta> validadores;
 
-    public void agendar(DadosAgendamentoConsulta dados) {
+    public DadosDetalhamentoConsulta agendar(DadosAgendamentoConsulta dados) {
 
         var paciente = pacienteRepository.findById(dados.idPaciente())
-                .orElseThrow(() -> new NoSuchElementException("Paciente não encontrado"));
+                .orElseThrow(() -> new ValidacaoConsultaException("Paciente não encontrado"));
         var medico = dados.idMedico() != null ?
                 medicoRepository.findById(dados.idMedico())
-                        .orElseThrow(() -> new NoSuchElementException("Médico não encontrado"))
+                        .orElseThrow(() -> new ValidacaoConsultaException("Médico não encontrado"))
                 : escolherMedico(dados);
+
+        if (medico == null) {
+            throw new ValidacaoConsultaException("Não existe médico disponível nessa data");
+        }
 
         validadores.forEach(v -> v.validar(dados));
 
         var consulta = new Consulta(medico,paciente,dados.data());
 
         consultaRepository.save(consulta);
+
+        return new DadosDetalhamentoConsulta(consulta);
     }
 
     private Medico escolherMedico(DadosAgendamentoConsulta dados) {

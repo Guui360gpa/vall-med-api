@@ -1,6 +1,7 @@
 package med.voll.api.infra.exception;
 
 import jakarta.persistence.EntityNotFoundException;
+import med.voll.api.domain.consulta.validacoes.ValidacaoConsultaException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -53,6 +54,13 @@ public class TratadorDeErros {
     public ResponseEntity tratarErro500(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro " + ex.getLocalizedMessage());
     }
+
+    @ExceptionHandler(ValidacaoConsultaException.class)
+    public ResponseEntity tratarErroValidacaoConsulta(ValidacaoConsultaException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+
 
     private record DadosErroValidacao(String campo, String mensagem) {
         public DadosErroValidacao(FieldError erro){

@@ -88,6 +88,26 @@ class MedicoRepositoryTest {
         assertThat(medicoLivre).isNull();
     }
 
+    @Test
+    @DisplayName("Deveria devolver null se cadastrado com outra especialidade")
+    void escolherMedicoAleatorioLivreNaDataCenario4() {
+        //arrange
+        var proximaSegundaAs10 = LocalDate.now()
+                .with(TemporalAdjusters.next(DayOfWeek.MONDAY))
+                .atTime(10,0);
+
+        var medico = cadastrarMedico("Medico","medico@voll.med","123456",Especialidade.GINECOLOGIA);
+        medico.setAtivo(false);
+        var paciente = cadastrarPaciente("Paciente","paciente@voll.med","00000000000");
+        cadastrarConsulta(medico,paciente,proximaSegundaAs10);
+
+        //act
+        var medicoLivre = medicoRepository.escolherMedicoAleatorioLivreNaData(Especialidade.CARDIOLOGIA,proximaSegundaAs10);
+
+        //assert
+        assertThat(medicoLivre).isNull();
+    }
+
     private void cadastrarConsulta(Medico medico, Paciente paciente, LocalDateTime data) {
         entityManager.persist(new Consulta(medico, paciente, data));
     }

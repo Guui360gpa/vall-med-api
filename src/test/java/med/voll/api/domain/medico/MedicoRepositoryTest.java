@@ -33,7 +33,7 @@ class MedicoRepositoryTest {
     private TestEntityManager entityManager;
 
     @Test
-    @DisplayName("Deveria devolver null quando unico medico cadastrado não está disponível na data")
+    @DisplayName("Deveria devolver null quando unico medico cadastrado está ativo mas não está disponível na data")
     void escolherMedicoAleatorioLivreNaDataCenario1() {
         //arrange
         var proximaSegundaAs10 = LocalDate.now()
@@ -52,7 +52,7 @@ class MedicoRepositoryTest {
     }
 
     @Test
-    @DisplayName("Deveria devolver medico quando ele estiver disponivel na data")
+    @DisplayName("Deveria devolver medico quando ele estiver ativo, disponivel na data e com especialidade")
     void escolherMedicoAleatorioLivreNaDataCenario2() {
         //arrange
         var proximaSegundaAs10 = LocalDate.now()
@@ -69,7 +69,7 @@ class MedicoRepositoryTest {
     }
 
     @Test
-    @DisplayName("Deveria devolver null se medico estiver inativo")
+    @DisplayName("Deveria devolver null quando o unico medico disponivel na data mas estiver inativo")
     void escolherMedicoAleatorioLivreNaDataCenario3() {
         //arrange
         var proximaSegundaAs10 = LocalDate.now()
@@ -89,7 +89,7 @@ class MedicoRepositoryTest {
     }
 
     @Test
-    @DisplayName("Deveria devolver null se cadastrado com outra especialidade")
+    @DisplayName("Deveria devolver null se medico cadastrado ativo e livre mas  com outra especialidade")
     void escolherMedicoAleatorioLivreNaDataCenario4() {
         //arrange
         var proximaSegundaAs10 = LocalDate.now()
